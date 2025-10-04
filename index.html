@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400&display=swap" rel="stylesheet" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=PT+Sans+Narrow:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=PT+Sans+Narrow:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=PT+Sans+Narrow:wght@400;700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+  </style>
+  <!-- <link rel="stylesheet" href="euiss.css"> -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- GET CSS FROM EUISS MAIN COLUMN TO CALCULATE MAP OFFSET -->
+  <script>
+    // Get the main element
+    const mainElement = document.querySelector('main.row.l-main');
+
+    // Get the computed styles of the main element
+    const computedStyle = getComputedStyle(mainElement);
+
+    // Extract the left padding and margin
+    const leftPadding = computedStyle.paddingLeft;
+    const leftMargin = computedStyle.marginLeft;
+
+    // Set these values as CSS variables on the document root
+    document.documentElement.style.setProperty('--main-left-padding', leftPadding);
+    document.documentElement.style.setProperty('--main-left-margin', leftMargin);
+  </script>
+
+
+  <!-- LEGEND CONTAINER -->
+  <div id="fixed-legend" class="legend-container"></div>
+
+  <!-- INTRODUCTION -->
+  <div class="col" style="margin-top: 1vh;">
+    <p>
+      To delve into each topic more in detail, <a href="../reports/trump-harris-and-transatlantic-uncertainties"
+        target="_blank">click here</a>.
+    </p>
+  </div>
+
+  <!-- SCROLLY INDICATOR -->
+  <div class="scroll-indicator">
+    <div class="arrow-text">Scroll down to go on.</div>
+    <div class="arrow"></div>
+  </div>
+
+  <!-- FIRST MAP -->
+  <div style="margin: 0px 10px 0px 0px;"><!-- sticky graphic -->
+    <!-- <figure class='sticky'> chart stuff in here -->
+    <figure id="map" class="sticky"></figure><!-- step text -->
+    <!-- <div class='step' data-index='0'> --> <!-- <p>Step text</p> -->
+
+    <!-- CARDS -->
+    <article id="card">
+      <div class="space"></div>
+      <section id="ch1" class="section" data-index='0'>
+        <h2>
+          Russia’s military presence in the Arctic
+        </h2>
+        <p>
+          Russia has been increasing its military presence in the Arctic region, viewing it as a strategic priority.
+          This
+          includes the establishment of new military bases, the expansion of existing ones, and increased military
+          exercises in the area. The Kremlin's focus on the Arctic is driven by a desire to secure its northern borders,
+          access new shipping routes, and exploit the region's vast natural resources.
+        </p>
+
+        <!-- LEGEND -->
+        <div id="arctic-mil-legend" class="legend-container" data-index="1">
+          <div>
+            <div><b>Military infrastructure</b></div>
+            <div><span class="dot-fuchsia2"></span> Military base</span></div>
+            <div><span class="dot-fuchsia2-outline"></span> Dual-use infrastructure</span></div>
+            <div class="source">Data: EUISS research based on media outlets, 2025</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="space"></div>
+      <section id="ch2" class="section" data-index='1'>
+        <h2>
+          Oil and gas reserves in the Russian Arctic
+        </h2>
+        <p>
+          The Arctic region is believed to hold significant oil and gas reserves, making it a key area of interest for
+          energy exploration and extraction. Russia, in particular, has been actively developing its Arctic oil and gas
+          resources, with several major projects underway. The exploitation of these resources is seen as crucial for
+          Russia's energy security and economic development. However, the environmental risks associated with Arctic
+          drilling and the geopolitical tensions surrounding the region pose challenges to these efforts.
+        </p>
+
+        <!-- LEGEND -->
+        <div id="arctic-res-legend" class="legend-container" data-index="1">
+          <div><b>Oil and gas</b></div>
+          <div><span class="dot-teal"></span> Gas (and/or condensate)</span></div>
+          <div><span class="dot-mauve"></span> Oil</span></div>
+          <div><span class="dot-teal2"></span> Oil and gas</span></div>
+          <div class="source">Data: GEM, 2025</div>
+        </div>
+      </section>
+
+      <div class="space"></div>
+      <section id="ch3" class="section" data-index='1'>
+        <p>
+          But this is not without problems...
+        </p>
+
+        <!-- LEGEND -->
+        <div id="arctic-min-legend" class="legend-container" data-index="1">
+          <div><b>Other resources</b></div>
+          <div><span class="dot-black"></span> Coal mine</div>
+          <div><span class="dot-fuchsia1"></span> Critical minerals</div>
+          <div><span class="dot-grey"></span> Iron ore mine</div>
+          <div class="source">Data: SIPRI, 2024</div>
+        </div>
+      </section>
+
+      <div class="space"></div>
+
+      <section id="ch4" class="section" data-index='1'>
+        <h2>
+          Other resources
+        </h2>
+        <p>
+          The Arctic is also rich in other natural resources, including critical minerals such as rare earth elements,
+          which are essential for modern technologies. Russia has been exploring and developing these resources to
+          diversify its economy and reduce dependence on oil and gas revenues. However, the extraction of these minerals
+          in the harsh Arctic environment presents significant technical and environmental challenges.
+        </p>
+      </section>
+
+      <div class="space"></div>
+      <section id="ch5" class="section" data-index='1'>
+        <h2>
+          Permafrost
+        </h2>
+        <p>
+          Permafrost, or permanently frozen ground, is a common feature of the Arctic landscape. However, climate change
+          is causing permafrost to thaw at an alarming rate, leading to significant environmental and infrastructural
+          challenges.
+        </p>
+        <div id="pf-2000-legend" class="legend-container" data-index="1">
+          <div><b>Permafrost</b></div>
+          <div><span class="dot-teal3-33"></span> 2000 baseline</div>
+          <div class="source">Data: woodwellclimate.org, 2025</div>
+        </div>
+      </section>
+
+      <div class="space"></div>
+      <section id="ch6" class="section" data-index='1'>
+        <p>
+          Russia's rapidly thawing permafrost is opening up new areas for resource extraction, but it also poses risks
+          to
+          existing infrastructure and ecosystems. The thawing permafrost can lead to ground instability, affecting
+          buildings, roads, and pipelines. Additionally, the release of greenhouse gases from thawing permafrost
+          contributes to global warming, creating a feedback loop that exacerbates climate change.
+        </p>
+        <div id="pf-2070-legend" class="legend-container" data-index="1">
+          <div><b>Permafrost</b></div>
+          <div><span class="dot-teal3-33"></span> 2000 baseline</div>
+          <div><span class="dot-teal3-66"></span> 2070 scenario</div>
+          <div class="source">Data: woodwellclimate.org, 2025</div>
+        </div>
+      </section>
+
+      <div class="space"></div>
+      <section id="ch7" class="section" data-index='1'>
+        <p>
+          Arctic shipping routes, such as the Northern Sea Route along Russia's northern coast, are becoming more
+          navigable due to melting sea ice. This has significant implications for global trade, as these routes can
+          reduce
+          shipping times between Europe and Asia. Russia is actively promoting the use of the Northern Sea Route and
+          investing in infrastructure to support increased maritime traffic. However, the environmental impact of
+          increased shipping in the fragile Arctic ecosystem remains a concern.
+        </p>
+        <div id="arctic_lanes-legend" class="legend-container" data-index="1">
+          <div><b>Arctic shipping lanes</b></div>
+          <div class="source">Data: Arctic Portal, 2025</div>
+        </div>
+      </section>
+
+      <div class="space"></div>
+    </article>
+  </div>
+
+  <!-- MAPBOX -->
+  <script>// style access token
+    mapboxgl.accessToken =
+      // deployment euiss
+      "pk.eyJ1IjoiY2R0cmljaCIsImEiOiJjbTZqNnR4cWswYnpxMm5zM2p0c2p4YXp1In0.Ud1QOlVvlf9xlnnNKx0OVA"; var map = new mapboxgl.Map({
+        container: "map",
+        // style URL
+        style: "mapbox://styles/cdtrich/cm5zhwwi9001z01qwfrno7a4r",
+        // initial camera position
+        projection: "globe",
+        center: [104.88053, 67.54952],
+        zoom: zoomFactor ? 0 : 2.2,
+        pitch: 0.0,
+        bearing: 0.0,
+      });//   map scrolling disabled for scrollytelling to work
+    map.boxZoom.disable();
+    map.scrollZoom.disable();
+    map.keyboard.disable();
+    map.doubleClickZoom.disable();
+    map.dragPan.disable();
+    map.dragRotate.disable();
+    map.touchZoomRotate.disable();
+    map.getCanvas().style.cursor = "default";
+
+    var popup = new mapboxgl.Popup({
+      className: "popup",
+      closeButton: false,
+      closeOnClick: false,
+      offset: [0, -5],
+    });
+
+    // is device a mobile?
+    var zoomFactor = window.innerWidth < 768
+
+    var chapters = {
+      // ch1: {
+      //   center: [104.88053, 67.54952],
+      //   zoom: zoomFactor ? 0 : 2.2,
+      //   pitch: 0,
+      //   bearing: 0,
+      // },
+      ch1: {
+        center: [104.88053, 67.54952],
+        zoom: zoomFactor ? 2.3 : 3.2,
+        pitch: 0,
+        bearing: 0,
+      },
+      ch2: {
+        center: [104.88053, 67.54952],
+        zoom: zoomFactor ? 2.3 : 3.2,
+        pitch: 0,
+        bearing: 0,
+      },
+      ch3: {
+        center: [104.88053, 67.54952],
+        zoom: zoomFactor ? 2.3 : 3.2,
+        pitch: 0,
+        bearing: 0,
+      },
+      ch4: {
+        center: [104.88053, 67.54952],
+        zoom: zoomFactor ? 2.3 : 3.2,
+        pitch: 0,
+        bearing: 0,
+      },
+      ch5: {
+        center: [104.88053, 67.54952],
+        zoom: zoomFactor ? 2.3 : 3.2,
+        pitch: 0,
+        bearing: 0,
+      },
+      ch6: {
+        center: [104.88053, 67.54952],
+        zoom: zoomFactor ? 2.3 : 3.2,
+        pitch: 0,
+        bearing: 0,
+      },
+      ch7: {
+        center: [104.88053, 77.54952],
+        zoom: zoomFactor ? 2.3 : 3.2,
+        pitch: 0,
+        bearing: 0,
+      },
+    };// On every scroll event, check which element is on screen
+    window.onscroll = function () {
+      // for cards
+      var chapterNames = Object.keys(chapters);
+      for (var i = 0; i < chapterNames.length; i++) {
+        var chapterName = chapterNames[i];
+        if (isElementOnScreen(chapterName)) {
+          setActiveChapter(chapterName);
+          break;
+        }
+      }
+    };
+
+    // COUNTRIES
+    map.on("style.load", function () {
+
+      // Military
+      map.addSource("arctic-mil", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.1jvqk34e",
+      });
+      // https://docs.mapbox.com/style-spec/reference/layers/#paint-circle-circle-stroke-color
+      map.addLayer({
+        // name as in mapbox (preset in geojson file - leave as "name": "points")
+        id: "arctic-mil",
+        //   data type
+        type: "circle",
+        source: "arctic-mil",
+        "source-layer": "arctic_mil-0q69ne", // CHANGE this with the name of the layer
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "circle-opacity": 1,
+          "circle-stroke-opacity": 1,
+          "circle-stroke-width": 2,
+          "circle-radius": 5,
+          "circle-color": [
+            "match",
+            ["get", "Type"],
+            "Military base",
+            "#df3144",
+            "Dual-use infrastructure",
+            "#ffffff",
+            "#999999"
+          ],
+          "circle-stroke-color": [
+            "match",
+            ["get", "Type"],
+            "Military base",
+            "#ffffff",
+            "Dual-use infrastructure",
+            "#df3144",
+            "#999999"
+          ],
+        }
+      });
+
+      // Russia outline
+      map.addSource("arctic-ru", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.7qix6ty3",
+      });
+      map.addLayer({
+        // name as in mapbox (preset in geojson file - leave as "name": "points")
+        id: "arctic-ru",
+        //   data type
+        type: "fill",
+        source: "arctic-ru",
+        "source-layer": "arctic_ru-4l0nk1", // CHANGE this with the name of the layer
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "fill-opacity": 0.05,
+          "fill-color": "#000000",
+          // "fill-outline-color": "#000000", // changed from stroke-color
+        }
+      });
+
+      // Reserves
+      map.addSource("arctic-res", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.0ez98k5w",
+      });
+      map.addLayer({
+        // name as in mapbox (preset in geojson file - leave as "name": "points")
+        id: "arctic-res",
+        //   data type
+        type: "circle",
+        source: "arctic-res",
+        "source-layer": "arctic_res-9ro66t", // CHANGE this with the name of the layer
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "circle-radius": 3,
+          "circle-opacity": .5,
+          "circle-stroke-width": 1,
+          "circle-stroke-opacity": 1,
+          "circle-stroke-color": [
+            "match",
+            ["get", "Type"],
+            "Gas (and/or condensate)",
+            "#309ebe",
+            "Oil",
+            "#33163a",
+            "Oil and gas",
+            "#376882",
+            "#999999"
+          ],
+          "circle-color": [
+            "match",
+            ["get", "Type"],
+            "Gas (and/or condensate)",
+            "#309ebe",
+            "Oil",
+            "#33163a",
+            "Oil and gas",
+            "#376882",
+            "#999999"
+          ],
+        }
+      });
+
+      // Reserves highlight
+      map.addSource("arctic-res-annotate", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.dqkc4chn",
+      });
+      map.addLayer({
+        // name as in mapbox (preset in geojson file - leave as "name": "points")
+        id: "arctic-res-annotate",
+        //   data type
+        type: "circle",
+        source: "arctic-res-annotate",
+        "source-layer": "arctic_res_annotate-2xq5zh", // CHANGE this with the name of the layer
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "circle-radius": 6,
+          "circle-opacity": 1,
+          "circle-color": [
+            "match",
+            ["get", "Type"],
+            "LNG",
+            "#309ebe",
+            "Oil",
+            "#33163a",
+            "#999999"
+          ],
+        }
+      });
+
+      // Reserves highlight text labels
+      map.addSource("arctic-res-annotate-text", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.dqkc4chn",
+      });
+      map.addLayer({
+        id: "arctic-res-annotate-text",
+        type: "symbol",
+        source: "arctic-res-annotate-text",
+        "source-layer": "arctic_res_annotate-2xq5zh", // CHANGE this with the name of the layer
+        layout: {
+          visibility: "none",
+          "text-allow-overlap": true,
+          "text-ignore-placement": true,
+          "symbol-avoid-edges": false,
+          "text-field": ["get", "Annotation"], // This gets the annotation text
+          "text-font": ["PT Sans", "Arial Unicode MS Regular"],
+          "text-size": 16,
+          "text-offset": [
+            "case",
+            ["==", ["get", "Name"], "Yamal LNG"],
+            ["literal", [1, -0.05]],  // Use literal for arrays
+            ["case",
+              ["==", ["get", "Name"], "Arctic LNG 2"],
+              ["literal", [-.8, 1]], ["literal", [-1, -0.05]]]   // Default case
+          ],
+          "text-anchor": [
+            "case",
+            ["==", ["get", "Name"], "Arctic LNG 2"], "right",
+            ["==", ["get", "Name"], "Yamal LNG"], "left",
+            ["==", ["get", "Name"], "Prirazlomnoye field"], "right",
+            "left"
+          ],
+          "text-justify": [
+            "case",
+            ["==", ["get", "Name"], "Arctic LNG 2"], "right",
+            ["==", ["get", "Name"], "Yamal LNG"], "left",
+            ["==", ["get", "Name"], "Prirazlomnoye field"], "right",
+            "left"
+          ],
+          "text-max-width": 15, // Wrap long text
+        },
+        paint: {
+          "text-color": "#333333",
+          "text-halo-color": "#ffffff",
+          "text-halo-width": 2,
+          "text-halo-blur": 1
+        }
+      });
+
+      // permafrost
+      map.addSource("arctic-min", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.btnewnqa",
+        // url: "mapbox://cdtrich.afyrgzyo?v=" + Date.now()
+        // type: "geojson",
+        // data: "src/arctic_min.geojson",
+      });
+      map.addLayer({
+        // name as in mapbox 
+        id: "arctic-min",
+        //   data type
+        type: "circle",
+        source: "arctic-min",
+        "source-layer": "arctic_min-3w7ofo", // CHANGE this with the name of the layer
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "circle-radius": 3,
+          "circle-opacity": .5,
+          "circle-stroke-width": 1,
+          "circle-stroke-opacity": 1,
+          "circle-color": [
+            "match",
+            ["get", "Type"],
+            "Critical minerals",
+            "#ec5f5b",
+            "Coal mine",
+            "#000000",
+            "Iron ore mine",
+            "#595959",
+            "#999999"
+          ],
+          "circle-stroke-color": [
+            "match",
+            ["get", "Type"],
+            "Critical minerals",
+            "#ec5f5b",
+            "Coal mine",
+            "#000000",
+            "Iron ore mine",
+            "#595959",
+            "#999999"
+          ],
+        }
+      });
+
+      // permafrost
+      // 2000
+      map.addSource("pf-2000", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.azdbzoip",
+      });
+      map.addLayer({
+        // name as in mapbox
+        id: "pf-2000",
+        // data type
+        type: "fill",
+        source: "pf-2000",
+        "source-layer": "PF_2000-bnpi69", // CHANGE this with the name of the layer
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "fill-color": "#1d3956",
+          "fill-opacity": .33,
+        },
+      });
+
+      // 2070
+      map.addSource("pf-2070", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.2sjx26xb",
+      });
+      map.addLayer({
+        // name as in mapbox
+        id: "pf-2070",
+        // data type
+        type: "fill",
+        source: "pf-2070",
+        "source-layer": "PF_2070-1bswta", // CHANGE this with the name of the layer
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "fill-color": "#1d3956",
+          "fill-opacity": .33,
+        },
+      });
+
+      // lanes
+      map.addSource("arctic_lanes", {
+        type: "vector",
+        //   CHANGE url
+        url: "mapbox://cdtrich.5jhhasjz",
+        // type: "geojson",
+        // data: "src/arctic_min.geojson",
+      });
+      map.addLayer({
+        // name as in mapbox 
+        id: "arctic_lanes",
+        //   data type
+        type: "line",
+        source: "arctic_lanes",
+        "source-layer": "arctic_lanes-5w8st6", // CHANGE this with the name of the layer
+        filter: ["==", ["get", "Name"], "Northern Sea Route"], // Add this line
+        layout: {
+          visibility: "visible",
+        },
+        paint: {
+          "line-width": 2,
+          "line-opacity": 0, // Start at 0
+          "line-opacity-transition": {
+            duration: 4000, // 2 seconds
+            delay: 0
+          },
+          "line-color": "#000",
+        }
+      });
+    }); // Close the style.load event handler
+
+    // TOOLTIPS
+    // arctic-mil
+    map.on("mousemove", "arctic-mil", function (e) {
+      map.getCanvas().style.cursor = "pointer"; var features = map.queryRenderedFeatures(e.point, {
+        layers: ["arctic-mil"], // replace this with the name of the layer (preset in geojson file - leave as "name": "points")
+      }); if (!features.length) {
+        return;
+      }
+
+      var props = features[0].properties;
+      var state = features[0].state;    // tooltip
+      var feature = features[0];
+
+      popup
+        .setLngLat(e.lngLat)
+        .setHTML(
+          '<span style="font-weight:bold; font-family:PT+Sans">' +
+          feature.properties.Name +
+          '</span>'
+          +
+          '<br>' +
+          '<span style="font-family:PT+Sans">' +
+          feature.properties.Type +
+          '</span>'
+        )
+        .addTo(map);
+    });
+    // Change it back to a pointer when it leaves.
+    map.on("mouseleave", "arctic-mil", function () {
+      map.getCanvas().style.cursor = "default";
+      popup.remove();
+    });
+
+    // arctic-res
+    map.on("mousemove", "arctic-res", function (e) {
+      map.getCanvas().style.cursor = "pointer"; var features = map.queryRenderedFeatures(e.point, {
+        layers: ["arctic-res"], // replace this with the name of the layer (preset in geojson file - leave as "name": "points")
+      }); if (!features.length) {
+        return;
+      }
+
+      var props = features[0].properties;
+      var state = features[0].state;    // tooltip
+      var feature = features[0];
+
+      popup
+        .setLngLat(e.lngLat)
+        .setHTML(
+          '<span font-family:PT+Sans">' +
+          '<b>' + feature.properties.Name + '</b>' +
+          '</span>'
+          +
+          '<br>' +
+          '<span style="font-family:PT+Sans">' +
+          feature.properties.Type +
+          '</span>'
+        )
+        .addTo(map);
+    });
+    // Change it back to a pointer when it leaves.
+    map.on("mouseleave", "arctic-res", function () {
+      map.getCanvas().style.cursor = "default";
+      popup.remove();
+    });
+
+    // arctic-min
+    map.on("mousemove", "arctic-min", function (e) {
+      map.getCanvas().style.cursor = "pointer"; var features = map.queryRenderedFeatures(e.point, {
+        layers: ["arctic-min"], // replace this with the name of the layer (preset in geojson file - leave as "name": "points")
+      }); if (!features.length) {
+        return;
+      }
+
+      var props = features[0].properties;
+      var state = features[0].state;    // tooltip
+      var feature = features[0];
+
+      popup
+        .setLngLat(e.lngLat)
+        // .setHTML(
+        //   '<div style="font-family: monospace; font-size: 10px;">' +
+        //   'Type: "' + feature.properties.Type + '"<br>' +
+        //   'Name: "' + feature.properties.Name + '"<br>' +
+        //   'Name type: ' + typeof(feature.properties.Name) + '<br>' +
+        //   'All props: ' + JSON.stringify(feature.properties) +
+        //   '</div>'
+        // )
+        .setHTML(
+          '<span font-family:PT+Sans">' +
+          '<b>' + feature.properties.Name + '</b>' +
+          '</span>'
+          +
+          '<br>' +
+          '<span style="font-family:PT+Sans">' +
+          feature.properties.Type +
+          '</span>' +
+          '<br>' +
+
+          (feature.properties.Annotation ?
+            '<span style="font-family:PT+Sans; font-style: italic">' +
+            feature.properties.Annotation +
+            '</span>' : '')
+        )
+        .addTo(map);
+    });
+    // Change it back to a pointer when it leaves.
+    map.on("mouseleave", "arctic-min", function () {
+      map.getCanvas().style.cursor = "default";
+      popup.remove();
+    });
+
+    // var activeChapterName = "ch1";
+    var activeChapterName = [];
+
+    function setActiveChapter(chapterName) {
+      if (chapterName === activeChapterName) return;
+
+      var legendContent = '';  // Initialize legend content
+
+      // POINTS and COUNTRIES
+      if (chapterName === "ch1") {
+        // UKRAINE and TEXT
+        map.setLayoutProperty("arctic-mil", 'visibility', 'visible');
+        map.setLayoutProperty("arctic-ru", 'visibility', 'visible');
+        legendContent = document.getElementById('arctic-mil-legend').innerHTML;
+        // backscroll
+        map.setLayoutProperty("arctic-res", 'visibility', 'none');
+        map.setPaintProperty("arctic-mil", 'circle-radius', 5);
+        map.setPaintProperty("arctic-mil", 'circle-opacity', 1);
+        map.setPaintProperty("arctic-mil", 'circle-stroke-opacity', 1);
+      } else if (chapterName === "ch2") {
+        // ukr-acled out, ukr-kiel in
+        map.setPaintProperty("arctic-mil", 'circle-radius', 3);
+        map.setPaintProperty("arctic-mil", 'circle-opacity', .15);
+        map.setPaintProperty("arctic-mil", 'circle-stroke-opacity', .15);
+        map.setLayoutProperty("arctic-res", 'visibility', 'visible');
+        legendContent = document.getElementById('arctic-res-legend').innerHTML;
+        // backscroll
+        map.setLayoutProperty("arctic-res-annotate", 'visibility', 'none');
+        map.setLayoutProperty("arctic-res-annotate-text", 'visibility', 'none');
+        map.setLayoutProperty("arctic-min", 'visibility', 'none');
+        map.setPaintProperty("arctic-res", 'circle-stroke-opacity', 1);
+        // UKR-KIEL
+      } else if (chapterName === "ch3") {
+        map.setLayoutProperty("arctic-res-annotate", 'visibility', 'visible');
+        map.setLayoutProperty("arctic-res-annotate-text", 'visibility', 'visible');
+        map.setPaintProperty("arctic-res", 'circle-stroke-opacity', .2);
+        legendContent = document.getElementById('arctic-res-legend').innerHTML;
+        // map.setLayoutProperty("arctic-res", 'visibility', 'none');
+        // map.setLayoutProperty("arctic-min", 'visibility', 'visible');
+        // map.setLayoutProperty("arctic-min-total", 'visibility', 'visible');
+        // backscroll
+        map.setLayoutProperty("arctic-min", 'visibility', 'none');
+      } else if (chapterName === "ch4") {
+        map.setLayoutProperty("arctic-res-annotate", 'visibility', 'none');
+        map.setLayoutProperty("arctic-res-annotate-text", 'visibility', 'none');
+        // minerals
+        map.setLayoutProperty("arctic-min", 'visibility', 'visible');
+        map.setPaintProperty("arctic-min", 'circle-stroke-opacity', 1);
+        // arctic-res out, wb in 
+        legendContent = document.getElementById('arctic-min-legend').innerHTML;
+        // backscroll
+        map.setLayoutProperty("pf-2000", 'visibility', 'none');
+      } else if (chapterName === "ch5") {
+        // permafrost
+        map.setLayoutProperty("pf-2000", 'visibility', 'visible');
+        map.setPaintProperty("arctic-min", 'circle-stroke-opacity', .15);
+        legendContent = document.getElementById('pf-2000-legend').innerHTML;
+        // backscroll
+        map.setLayoutProperty("pf-2070", 'visibility', 'none');
+        map.setPaintProperty("pf-2000", 'fill-opacity', .33);
+      } else if (chapterName === "ch6") {
+        // permafrost
+        map.setLayoutProperty("pf-2070", 'visibility', 'visible');
+        map.setPaintProperty("pf-2000", 'fill-opacity', .156);
+        legendContent = document.getElementById('pf-2070-legend').innerHTML;
+        // backscroll
+        map.setLayoutProperty("arctic_lanes", 'visibility', 'none');
+      } else if (chapterName === "ch7") {
+        map.setLayoutProperty("arctic_lanes", 'visibility', 'visible');
+        legendContent = document.getElementById('arctic_lanes-legend').innerHTML;
+        // Fade in over 2 seconds
+        setTimeout(() => {
+          map.setPaintProperty("arctic_lanes", "line-opacity", 1);
+        }, 50);
+        // backscroll
+      }
+
+      // Update the fixed legend content and visibility
+      var legendContainer = document.getElementById('fixed-legend');
+      if (legendContent) {
+        legendContainer.innerHTML = legendContent;
+        legendContainer.style.display = 'block';
+      } else {
+        legendContainer.style.display = 'none';
+      }
+
+      map.flyTo(chapters[chapterName]); document.getElementById(chapterName).setAttribute("class", "active");
+      document.getElementById(activeChapterName).setAttribute("class", "");
+      activeChapterName = chapterName;
+    }
+    function isElementOnScreen(id) {
+      var element = document.getElementById(id);
+      var bounds = element.getBoundingClientRect();
+      return bounds.top < window.innerHeight && bounds.bottom > 0;
+    }
+
+  </script>
+
+  <!-- pudding scrolly -->
+  <!-- <script>
+  enterView({
+    selector: stepSel.nodes(),
+    offset: 0.5,
+    enter: el => {
+      const index = +d3.select(el).attr('data-index');
+      updateChart(index);
+    },
+    exit: el => {
+      let index = +d3.select(el).attr('data-index');
+      index = Math.max(0, index - 1);
+      updateChart(index);
+    }
+  });
+</script> -->
+
+  <!-- collapsible -->
+  <script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+{
+"type": "FeatureCollection",
+"name": "arctic_mil",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "Polar Star/Zvyozdny/Wrangel Island", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ -179.125900208048819, 70.964400744077352 ] } },
+{ "type": "Feature", "properties": { "Name": "Alakurtti (80th Brigade)", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 30.376847426422611, 66.960081825061422 ] } },
+{ "type": "Feature", "properties": { "Name": "Alykel/Norilsk", "Type": "Dual-use infrastructure", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 87.354474114084596, 69.327337511105071 ] } },
+{ "type": "Feature", "properties": { "Name": "Anadyr-Ugolny", "Type": "Dual-use infrastructure", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 177.757318567662253, 64.716167878499917 ] } },
+{ "type": "Feature", "properties": { "Name": "Cape Schmidt", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ -179.414470968732275, 68.892536761402781 ] } },
+{ "type": "Feature", "properties": { "Name": "Gadzhiyevo", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 33.320381176943677, 69.250943849672467 ] } },
+{ "type": "Feature", "properties": { "Name": "Gremikha", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 39.463809055304573, 68.075045718300046 ] } },
+{ "type": "Feature", "properties": { "Name": "Monchegorsk", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 33.018740526468314, 67.988975825685756 ] } },
+{ "type": "Feature", "properties": { "Name": "Nagurskoye/Arctic Shamrock/Trefoil", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 47.68058269983117, 80.808786243381022 ] } },
+{ "type": "Feature", "properties": { "Name": "Olenya", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 33.371815403816917, 69.214996510047897 ] } },
+{ "type": "Feature", "properties": { "Name": "Pechenga", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 31.310859212478896, 69.511798289316928 ] } },
+{ "type": "Feature", "properties": { "Name": "Rogachevo", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 52.485695051098617, 71.608808669237249 ] } },
+{ "type": "Feature", "properties": { "Name": "Severomorsk", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 33.419103824007053, 69.079364726329231 ] } },
+{ "type": "Feature", "properties": { "Name": "Severomorsk-3", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 33.731970968281694, 68.882368797260852 ] } },
+{ "type": "Feature", "properties": { "Name": "Sredny Island", "Type": "Dual-use infrastructure", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 91.453176234480239, 79.55963879671269 ] } },
+{ "type": "Feature", "properties": { "Name": "Temp", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 137.577714953450709, 75.767477485432536 ] } },
+{ "type": "Feature", "properties": { "Name": "Tiksi", "Type": "Dual-use infrastructure", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 128.891483239959484, 71.703675001548774 ] } },
+{ "type": "Feature", "properties": { "Name": "Vidyayevo", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 32.800584460866197, 69.318224532386495 ] } },
+{ "type": "Feature", "properties": { "Name": "Vorkuta", "Type": "Dual-use infrastructure", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 71.706516926677367, 67.939349324242983 ] } },
+{ "type": "Feature", "properties": { "Name": "Zapadnaya Litsa", "Type": "Military base", "Status": "Active" }, "geometry": { "type": "Point", "coordinates": [ 32.421940022246474, 69.436576031759259 ] } }
+]
+}

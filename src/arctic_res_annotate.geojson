@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "arctic_res_annotate",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "Name": "Arctic LNG 2", "Type": "LNG", "Contractor": "Novatek", "Annotation": "Facing delays due to Western sanctions", "Source": "https://www.highnorthnews.com/en/russia-continues-working-sanctioned-arctic-lng-2-wison-power-modules-installation-and-gas-flaring" }, "geometry": { "type": "Point", "coordinates": [ 74.130824328064307, 70.382696822970587 ] } },
+{ "type": "Feature", "properties": { "id": 2, "Name": "Yamal LNG", "Type": "LNG", "Contractor": "Novatek", "Annotation": "Russia's largest active LNG plant", "Source": "https://www.highnorthnews.com/en/russias-arctic-yamal-lng-gas-plant-saw-record-287-cargo-loadings-2024" }, "geometry": { "type": "Point", "coordinates": [ 73.081625327270274, 71.41192704996007 ] } },
+{ "type": "Feature", "properties": { "id": 3, "Name": "Prirazlomnoye field", "Type": "Oil", "Contractor": "Gazprom Neft", "Annotation": "Russia's only active offshore oil field in the Arctic, with estimated reserves at 70 million tonnes", "Source": "https://www.gazprom.com/projects/prirazlomnoye/   https://www.thebarentsobserver.com/news/paralysis-looms-over-russias-arctic-oil/422987" }, "geometry": { "type": "Point", "coordinates": [ 56.634, 69.473 ] } }
+]
+}

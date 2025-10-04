@@ -1,0 +1,504 @@
+/* ========================================
+   ROOT VARIABLES & BASE STYLES
+   ======================================== */
+
+:root {
+    --fluid-screen: 100vw;
+    --h2-font-size: calc(34 / 16 * 1rem + (42 - 34) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --h2-line-height: calc(44 / 16 * 1rem + (55 - 44) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --h2-margin: calc(44 / 16 * 1rem + (55 - 44) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-font-size: calc(20 / 16 * 1rem + (20 - 20) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-line-height: calc(30 / 16 * 1rem + (30 - 30) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-margin: calc(30 / 16 * 1rem + (30 - 30) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-s-font-size: calc(15 / 16 * 1rem + (17 - 15) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-s-line-height: calc(17 / 16 * 1rem + (23 - 17) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-s-margin: calc(23 / 16 * 1rem + (28 - 23) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-xs-font-size: calc(14 / 16 * 1rem + (14 - 14) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-xs-line-height: calc(22 / 16 * 1rem + (22 - 22) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --body-xs-margin: calc(22 / 16 * 1rem + (22 - 22) * calc((var(--fluid-screen) - 360 / 16 * 1rem) / (1920 - 360)));
+    --tx-color: #515050;
+}
+
+body {
+    margin: 0;
+    padding: 0 calc(var(--spacing-xl) + var(--spacing-m));
+    height: auto;
+    overflow-x: hidden;
+    /* REMOVED overflow-y: hidden - this was preventing scrolling */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Opera */
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 0 var(--spacing-m);
+    }
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+
+h2 {
+    font-family: "Merriweather", serif;
+    font-weight: 700;
+    font-size: var(--h2-font-size);
+    line-height: var(--h2-line-height);
+    letter-spacing: -0.02em;
+    margin-top: var(--h2-margin);
+    margin-bottom: var(--h2-margin);
+}
+
+h3 {
+    color: #1d1d1b;
+    font-size: 16px;
+    text-align: left;
+    font-family: "PT Sans", sans-serif;
+    font-weight: 700;
+}
+
+p,
+a,
+ol,
+ul,
+li,
+div.arrow-text {
+    font-family: "PT Sans", sans-serif;
+    font-weight: 400;
+    font-size: var(--body-font-size);
+    line-height: var(--body-line-height);
+    letter-spacing: 0em;
+    margin-top: var(--body-margin);
+    margin-bottom: var(--body-margin);
+    color: var(--tx-color, #959595);
+}
+
+@media (max-width: 768px) {
+    p,
+    a,
+    ol,
+    ul,
+    li {
+        font-size: calc(var(--body-s-font-size) * 1.072386058981233);
+        line-height: calc(var(--body-s-line-height) * 1.4);
+    }
+}
+
+.chart-title {
+    font-family: "PT Sans Narrow", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0;
+}
+
+.mapboxgl-ctrl-bottom-right,
+.mapboxgl-ctrl-bottom-right * {
+  /* font-size: 10px !important; */
+  font-size: var(--body-xs-font-size);
+}
+
+/* Highlight Classes */
+.hl1,
+.hl2,
+.hl3,
+.hl4 {
+    color: #fff;
+    font-weight: 700;
+    margin: 0 -0.15em;
+    padding: 0 0.15em;
+}
+
+.hl1 {
+    background-color: #1d1d1b;
+}
+
+.hl2 {
+    background-color: #df3144;
+}
+
+.hl3 {
+    background-color: #33163a;
+}
+
+/* ========================================
+   ARTICLE & LAYOUT
+   ======================================== */
+
+article {
+    position: relative;
+}
+
+figure.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.col {
+    position: relative;
+    width: 100%;
+}
+
+.node-body {
+    max-width: 100vw;
+    width: 100%;
+    left: 0;
+}
+
+aside {
+    display: none;
+}
+
+/* ========================================
+   SCROLLYTELLING SECTIONS
+   ======================================== */
+
+/* p {
+    z-index: 11;
+    text-align: left !important;
+} */
+
+.active,
+.section {
+    color: #1d1d1b;
+    height: auto;
+    /* opacity: 0.5; */
+    font-size: 15px;
+    padding: 0.7vw 1.5vw 0.7vw 1.5vw;
+    /* line-height: 25px; */
+    border-radius: 0;
+    pointer-events: all !important;
+    background: rgb(255, 255, 255) !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 10px;
+    border-radius: 10px;
+    margin-top: auto;
+}
+
+.active {
+    opacity: 1;
+}
+
+.section:last-child {
+    margin-bottom: 350px;
+}
+
+@media only screen and (max-width: 768px) {
+    .active,
+    .section {
+        background: rgba(255, 255, 255, 0.66);
+    }
+}
+
+.space {
+    margin: 0;
+    height: 100vh;
+    width: 0;
+    pointer-events: none;
+}
+
+#card {
+    /* margin-right: 3.5vw; */
+    /* margin-left: 3.5vw; */
+    width: 60vw;
+    left: 20vw;
+    opacity: 1;
+    pointer-events: none;
+    color: #1d1d1b;
+    font-family: "PT Sans", sans-serif;
+    z-index: 10;
+}
+
+@media only screen and (max-width: 768px) {
+    #card {
+        width: 90vw;
+        margin-right: 0;
+        margin-left: 0;
+        z-index: 3;
+    }
+}
+
+/* ========================================
+   MAP
+   ======================================== */
+
+#map {
+    /* left: calc(-1 * (var(--main-left-padding) + var(--main-left-margin))); */
+    /* width: calc(100vw - var(--main-left-padding) - var(--main-left-margin)); */
+    width: 100vw;
+    height: 100vh;
+    margin-top: 40px;
+    margin-left: 0px;
+    margin-right: 0px;
+    z-index: 0;
+}
+
+.popup .mapboxgl-popup-content {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #000;
+    margin: 5px;
+    padding: 0.5em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-popup-tip {
+    display: none;
+}
+
+/* ========================================
+   LEGEND
+   ======================================== */
+
+.legend-container {
+    position: fixed;
+    bottom: 2em;
+    right: 10vw;
+    width: 15vw;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: var(--body-s-font-size);
+    padding: 1em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none;
+    font-family: "PT Sans", sans-serif;
+}
+
+@media only screen and (max-width: 768px) {
+    .legend-container {
+        width: 40vw;
+        z-index: 2;
+    }
+}
+
+.legend {
+    opacity: 0.8;
+    right: 2vh;
+    text-align: right;
+    padding: 10px;
+    position: content;
+    right: 10px;
+    z-index: 1;
+}
+
+.legend h4 {
+    margin: 0 0 10px;
+}
+
+.legend div span {
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
+}
+
+.legend-container .legend-dot,
+.legend-container span {
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
+    background-color: currentColor;
+}
+
+.legend-container .legend-dot {
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
+}
+
+/* Legend Dot Colors */
+.legend-container .dot-fuchsia1 {
+    background-color: #ec5f5b33;
+    border: 1px solid #ec5f5b;
+}
+
+.legend-container .dot-fuchsia2 {
+    background-color: #df3144;
+}
+
+.legend-container .dot-fuchsia2-outline {
+    background-color: #fff;
+    border: 2px solid #df3144;
+}
+
+.legend-container .dot-fuchsia3 {
+    background-color: #a41e26;
+}
+
+.legend-container .dot-mauve {
+    background-color: #33163a33;
+    border: 1.5px solid #33163a;
+}
+
+.legend-container .dot-teal1 {
+    background-color: #64c2c7;
+}
+
+.legend-container .dot-teal {
+    background-color: #309ebe33;
+    border: 1.5px solid #309ebe;
+}
+
+.legend-container .dot-teal2 {
+    background-color: #37688233;
+    border: 1.5px solid #376882;
+}
+
+.legend-container .dot-teal3 {
+    background-color: #1d3956;
+}
+
+.legend-container .dot-teal3-33 {
+    background-color: #1d395654;
+}
+
+.legend-container .dot-teal3-66 {
+    background-color: #1d3956a8;
+}
+
+.legend-container .dot-egg {
+    background-color: #ffde75;
+}
+
+.legend-container .dot-grey {
+    background-color: #99999933;
+    border: 1px solid #999999;
+}
+
+.legend-container .dot-black {
+    background-color: #00000033;
+    border: 1px solid #000000;
+}
+
+.legend-container .dot-outline {
+    border: 1px solid #000;
+    background-color: transparent;
+    opacity: 0.5;
+    stroke-opacity: 1;
+}
+
+.legend-container .dot-white {
+    background-color: #fff;
+}
+
+.source {
+    font-size: var(--body-s-font-size);
+    color: #999;
+    margin-top: 1em;
+}
+
+/* ========================================
+   FLOURISH EMBEDS
+   ======================================== */
+
+.flourish-embed {
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+}
+
+#static {
+    position: static !important;
+}
+
+.fl-scrolly-step {
+    width: 66% !important;
+    z-index: 20;
+}
+
+@media (max-width: 768px) {
+    .fl-scrolly-step {
+        width: 90% !important;
+    }
+}
+
+.flourish-credit {
+    display: none;
+}
+
+.flourish-embed-div {
+    width: 100%;
+}
+
+.flourish-embed-iframe-half {
+    width: 50% !important;
+    float: right;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chart {
+    flex: 1;
+    margin: 0 10px;
+    top: 0;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+.scroll-indicator {
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.arrow-text {
+    font-family: "PT Sans", sans-serif;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+}
+
+.arrow {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+    transform: rotate(45deg);
+    display: inline-block;
+}
+
+.arrow:before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 50%;
+    top: 50%;
+    margin: -10px 0 0 -10px;
+    border-right: 1px #000 solid;
+    border-bottom: 1px #000 solid;
+    animation: arrow 2s infinite;
+}
+
+@keyframes arrow {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(10px, 10px);
+    }
+}
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+
+input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
