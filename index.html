@@ -190,6 +190,9 @@
       </section>
 
       <div class="space"></div>
+      <section id="ch8" class="section" data-index='1'>
+        <!-- Empty section or conclusion text -->
+      </section>
     </article>
   </div>
 
@@ -276,6 +279,12 @@
         pitch: 0,
         bearing: 0,
       },
+      ch8: {  // Add this
+        center: [104.88053, 77.54952],
+        zoom: zoomFactor ? 2.3 : 3.2,
+        pitch: 0,
+        bearing: 0,
+      },
     };// On every scroll event, check which element is on screen
     window.onscroll = function () {
       // for cards
@@ -307,7 +316,7 @@
         source: "arctic-mil",
         "source-layer": "arctic_mil-0q69ne", // CHANGE this with the name of the layer
         layout: {
-          visibility: "none",
+          visibility: "visible",
         },
         paint: {
           "circle-opacity": 1,
@@ -349,7 +358,7 @@
         source: "arctic-ru",
         "source-layer": "arctic_ru-4l0nk1", // CHANGE this with the name of the layer
         layout: {
-          visibility: "none",
+          visibility: "visible",
         },
         paint: {
           "fill-opacity": 0.05,
@@ -584,7 +593,7 @@
       map.addSource("arctic_lanes", {
         type: "vector",
         //   CHANGE url
-        url: "mapbox://cdtrich.5jhhasjz",
+        url: "mapbox://cdtrich.1fx6302u",
         // type: "geojson",
         // data: "src/arctic_min.geojson",
       });
@@ -594,19 +603,15 @@
         //   data type
         type: "line",
         source: "arctic_lanes",
-        "source-layer": "arctic_lanes-5w8st6", // CHANGE this with the name of the layer
-        filter: ["==", ["get", "Name"], "Northern Sea Route"], // Add this line
+        "source-layer": "arctic_lanes-8ksp0u", // CHANGE this with the name of the layer
+        // filter: ["==", ["get", "Name"], "Northern Sea Route"], // Add this line
         layout: {
-          visibility: "visible",
+          visibility: "none",
         },
         paint: {
-          "line-width": 2,
-          "line-opacity": 0, // Start at 0
-          "line-opacity-transition": {
-            duration: 4000, // 2 seconds
-            delay: 0
-          },
-          "line-color": "#000",
+          "line-width": 3,
+          "line-opacity": .66,
+          "line-color": "#000000",
         }
       });
     }); // Close the style.load event handler
@@ -723,7 +728,7 @@
     });
 
     // var activeChapterName = "ch1";
-    var activeChapterName = [];
+    var activeChapterName = "ch1";
 
     function setActiveChapter(chapterName) {
       if (chapterName === activeChapterName) return;
@@ -732,7 +737,7 @@
 
       // POINTS and COUNTRIES
       if (chapterName === "ch1") {
-        // UKRAINE and TEXT
+        // new data
         map.setLayoutProperty("arctic-mil", 'visibility', 'visible');
         map.setLayoutProperty("arctic-ru", 'visibility', 'visible');
         legendContent = document.getElementById('arctic-mil-legend').innerHTML;
@@ -742,42 +747,51 @@
         map.setPaintProperty("arctic-mil", 'circle-opacity', 1);
         map.setPaintProperty("arctic-mil", 'circle-stroke-opacity', 1);
       } else if (chapterName === "ch2") {
-        // ukr-acled out, ukr-kiel in
-        map.setPaintProperty("arctic-mil", 'circle-radius', 3);
+        // fade old data
+        map.setPaintProperty("arctic-mil", 'circle-radius', 2);
         map.setPaintProperty("arctic-mil", 'circle-opacity', .15);
         map.setPaintProperty("arctic-mil", 'circle-stroke-opacity', .15);
+        // new data
         map.setLayoutProperty("arctic-res", 'visibility', 'visible');
         legendContent = document.getElementById('arctic-res-legend').innerHTML;
         // backscroll
         map.setLayoutProperty("arctic-res-annotate", 'visibility', 'none');
         map.setLayoutProperty("arctic-res-annotate-text", 'visibility', 'none');
         map.setLayoutProperty("arctic-min", 'visibility', 'none');
+        map.setPaintProperty("arctic-res", 'circle-radius', 3);
+        map.setPaintProperty("arctic-res", 'circle-opacity', .5);
         map.setPaintProperty("arctic-res", 'circle-stroke-opacity', 1);
-        // UKR-KIEL
       } else if (chapterName === "ch3") {
+        // fade old data
+        map.setPaintProperty("arctic-res", 'circle-radius', 2);
+        map.setPaintProperty("arctic-res", 'circle-opacity', .15);
+        map.setPaintProperty("arctic-res", 'circle-stroke-opacity', .15);
+        // new data
         map.setLayoutProperty("arctic-res-annotate", 'visibility', 'visible');
         map.setLayoutProperty("arctic-res-annotate-text", 'visibility', 'visible');
         map.setPaintProperty("arctic-res", 'circle-stroke-opacity', .2);
         legendContent = document.getElementById('arctic-res-legend').innerHTML;
-        // map.setLayoutProperty("arctic-res", 'visibility', 'none');
-        // map.setLayoutProperty("arctic-min", 'visibility', 'visible');
-        // map.setLayoutProperty("arctic-min-total", 'visibility', 'visible');
         // backscroll
         map.setLayoutProperty("arctic-min", 'visibility', 'none');
       } else if (chapterName === "ch4") {
+        // drop old data
         map.setLayoutProperty("arctic-res-annotate", 'visibility', 'none');
         map.setLayoutProperty("arctic-res-annotate-text", 'visibility', 'none');
-        // minerals
+        // new data
         map.setLayoutProperty("arctic-min", 'visibility', 'visible');
-        map.setPaintProperty("arctic-min", 'circle-stroke-opacity', 1);
-        // arctic-res out, wb in 
         legendContent = document.getElementById('arctic-min-legend').innerHTML;
         // backscroll
+        map.setPaintProperty("arctic-min", 'circle-radius', 3);
+        map.setPaintProperty("arctic-min", 'circle-opacity', .5);
+        map.setPaintProperty("arctic-min", 'circle-stroke-opacity', 1);
         map.setLayoutProperty("pf-2000", 'visibility', 'none');
       } else if (chapterName === "ch5") {
-        // permafrost
-        map.setLayoutProperty("pf-2000", 'visibility', 'visible');
+        // fade old data
+        map.setPaintProperty("arctic-min", 'circle-radius', 2);
+        map.setPaintProperty("arctic-min", 'circle-opacity', .15);
         map.setPaintProperty("arctic-min", 'circle-stroke-opacity', .15);
+        // new data
+        map.setLayoutProperty("pf-2000", 'visibility', 'visible');
         legendContent = document.getElementById('pf-2000-legend').innerHTML;
         // backscroll
         map.setLayoutProperty("pf-2070", 'visibility', 'none');
@@ -792,12 +806,13 @@
       } else if (chapterName === "ch7") {
         map.setLayoutProperty("arctic_lanes", 'visibility', 'visible');
         legendContent = document.getElementById('arctic_lanes-legend').innerHTML;
-        // Fade in over 2 seconds
-        setTimeout(() => {
-          map.setPaintProperty("arctic_lanes", "line-opacity", 1);
-        }, 50);
-        // backscroll
+      } else if (chapterName === "ch8") {
+        // Hide legend when scrolling past ch7
+        legendContent = '';
       }
+
+      map.flyTo(chapters[chapterName]);
+
 
       // Update the fixed legend content and visibility
       var legendContainer = document.getElementById('fixed-legend');
@@ -821,21 +836,21 @@
   </script>
 
   <!-- pudding scrolly -->
-  <!-- <script>
-  enterView({
-    selector: stepSel.nodes(),
-    offset: 0.5,
-    enter: el => {
-      const index = +d3.select(el).attr('data-index');
-      updateChart(index);
-    },
-    exit: el => {
-      let index = +d3.select(el).attr('data-index');
-      index = Math.max(0, index - 1);
-      updateChart(index);
-    }
-  });
-</script> -->
+  <script>
+    enterView({
+      selector: stepSel.nodes(),
+      offset: 0.5,
+      enter: el => {
+        const index = +d3.select(el).attr('data-index');
+        updateChart(index);
+      },
+      exit: el => {
+        let index = +d3.select(el).attr('data-index');
+        index = Math.max(0, index - 1);
+        updateChart(index);
+      }
+    });
+  </script>
 
   <!-- collapsible -->
   <script>
@@ -854,6 +869,114 @@
       });
     }
   </script>
+
+  <!-- REST OF TEXT -->
+  <p>The Arctic is a pillar of Russia’s power. It is also its Achilles heel.
+    As the challenge Russia poses to European security intensifies, the EU must devote more attention and resources to
+    the region in its efforts to unpower Russia – limiting Moscow’s capacity to wage the war in Europe and harm the EU’s
+    interests elsewhere.
+  </p>
+  <p>
+    The Arctic is a key strategic resource base for Russia, with mineral extraction playing a central role in sustaining
+    the state’s economy. Russia enjoys certain relative advantages in the Arctic compared to competitors, including a
+    strong military presence and unrivalled icebreaker fleet. However, its inability to mobilise sufficient investment
+    for development, or even basic infrastructure maintenance in the region while the region’s permafrost thaws,
+    represents a major challenge to its economic model. Meanwhile, efforts to expand and consolidate its military
+    footprint in the region are constrained by the imperative to divert available resources to the Kremlin’s war of
+    aggression against Ukraine. Recognising the region’s rising geopolitical importance and taking a clear-eyed view of
+    Russia’s strengths, vulnerabilities and tactics, the EU should designate the Arctic as a region of strategic
+    interest and act swiftly to curtail Russia’s revenues from Arctic resources while limiting the risks posed by its
+    hybrid campaigns to EU interests.
+  </p>
+  <h3>Russia and the Arctic: Looming vulnerabilities</h3>
+  <p>
+    Russia could not exist in its current form without its Arctic territories, which occupy more than 25% of Russian
+    land mass. Its resource-oriented economy, where hydrocarbons and ores make up around 60% of exports, relies heavily
+    on Arctic exploration. Over 80% of Russia’s gas and approximately 17% of its oil are produced in the Arctic, with
+    80% of estimated untapped oil resources located there. However, as the more accessible resources are being depleted
+    by extraction, over two thirds of remaining reserves are hard to reach. For Putin’s regime, the Arctic is a
+    ‘strategic resource base’ (стратегическая ресурсная база). Moscow’s interest in resource exploration has driven it
+    to claim large areas of the Arctic region, including 70% of the Arctic Ocean shelf beyond its exclusive economic
+    zone (EEZ), arguing that the Lomonosov and Mendeleev submarine ridges are natural extensions of the Siberian land
+    mass.
+  </p>
+  <p>
+    The Northern Sea Route (NSR) features prominently in Moscow’s plans both to develop its socioeconomically
+    underdeveloped Arctic zone and to establish a viable alternative to major global maritime routes. Russia harbours
+    ambitious plans to develop its port terminals, expand the icebreaker fleet and deploy a network of satellites and
+    other digital infrastructure along the route. The current infrastructure, fleet and permits to navigate the NSR,
+    which Russia contentiously claims to be an internal waterway – imposing an increasingly restrictive navigation
+    regime for foreign vessels – is operated by Rosatom. While it has consolidated its position as sole logistics
+    operator to ensure better coordination of Arctic trade and supply flows, it is significant that Rosatom has not been
+    subjected to EU or G7 sanctions since 2022 due to its role in the global nuclear fuel market. Finally, the Arctic is
+    fundamental to Russia’s national security as it is home to the Northern Fleet, one of the pillars of Russia’s
+    strategic deterrence.
+  </p>
+  <p>
+    The importance of the Arctic is underscored in key strategic documents such as Russia’s Foreign Policy Concept
+    (2023), where it is ranked as the second most strategically important region next to the ‘near abroad’ or the
+    Maritime Doctrine (2022). It also likely features prominently in the new naval development strategy issued in June
+    2025. This comes as no surprise as Vladimir Putin has consistently treated regional development as both a priority
+    and a matter of strategic importance over the years. That being said, there are manifest frictions in how Russia
+    translates strategic objectives into operational terms.
+  </p>
+  <p>
+    One such friction is a result of competing domestic positions. On one side security officials led by Nikolai
+    Patrushev, currently head of the reconstituted Maritime Collegium, are pushing for further militarisation of the
+    Russian Arctic and its closure to foreign presence. On the other side are economic technocrats who recognise that
+    ambitious development goals cannot be achieved without external – notably Chinese – capital. This faultline then
+    gives rise to tensions in framing other, more specific issues. For example, the NSR is both closely restricted and
+    controlled as a national security asset and marketed as a global commercial waterway.
+  </p>
+  <p>
+    Compared to other global regions where Moscow’s ability to project military and economic power is constrained,
+    Russia notionally enjoys certain advantages in the Arctic – notably its military presence and a fleet of nearly 60
+    icebreakers, including a unique subfleet of 8 nuclear-powered vessels, larger than the rest of the world‘s combined.
+    However, these strengths are offset by significant vulnerabilities and risks.
+  </p>
+  <p>
+    China plays a calculating and opportunistic role as Russia’s partner in the Arctic. Although it presents its
+    engagement as focused on research, environmental protection and commercial ventures, with the ’Polar Silk Road’
+    framed as part of the ’Belt and Road‘ global connectivity Initiative’, China’s deepening ties with Russia,
+    manifested notably by joint air and naval military exercises in the Bering Strait, have raised concern among the
+    other Arctic States. Similar unease surrounds its dual-use research activities, including the testing of
+    technologies in polar conditions that could be weaponised for military purposes, such as underwater UAVs.
+  </p>
+  <p>
+    Beijing has been keen to expand its presence – an ambition that has at times unsettled Moscow. However, it remains
+    cautious, for the time being at least, holding back from investing heavily in major infrastructure projects, and
+    even
+    suspending participation in some projects to avoid Western sanctions. China’s interest in the NSR led to the
+    creation
+    of a bilateral Subcommission on Cooperation on the Northern Sea Route in 2024. Rosatom and Chinese NewNew Shipping
+    are
+    looking to build seven new Arc7-class container ships to navigate the NSR, but the timeline, the prospects for
+    improved transit conditions due to receding ice, and overall economic profitability remain uncertain. Moscow’s dream
+    of year-long navigation along the route which could deliver 150 million tons per annum – in itself not an
+    overwhelming
+    figure, representing one tenth of current Suez traffic and one third of Bosporus volumes – appears unrealistic for
+    the
+    foreseeable future. The deepening interdependence of Russia and China suggests that potential frictions will likely
+    be
+    contained rather than escalate into conflict in the short term. China, meanwhile, will also remain satisfied with
+    buying discounted Russian hydrocarbons. But expectations concerning the volume of Chinese investment needed to
+    develop
+    the Russian Arctic will likely remain unfulfilled: a result both of Beijing’s caution and constraints imposed by
+    Moscow’s securitisation of the zone.
+  </p>
+  <p>
+    This is a serious problem for Russia. It will not be able to develop the Arctic zone without substantial foreign
+    resources and technology, access to which is now severely restricted by Western sanctions. Without massive
+    investment, Russia will struggle even to maintain existing infrastructure, already under threat due to thawing
+    permafrost. Given its heavy reliance on hydrocarbon exploitation, and the absence of any viable alternative sector
+    even in the long term, the impact of thawing permafrost represents a major threat to the very foundations of the
+    Russian state’s economic model. Against this backdrop, failing to meet development objectives pales in comparison to
+    the scale of this challenge. Some 65% of Russia’s territory lies on permafrost, and much of its oil and gas
+    infrastructure – including mining facilities and major pipelines such as Yamal and Power of Siberia – is at risk
+    from the thawing of the ’permanently’ frozen ground, with 45% of extraction sites located in high-risk zones.
+    Industrial facilities face similar dangers, as highlighted by the Nornickel power plant environmental disaster in
+    Norilsk in 2020, where 21,000 tons of diesel fuel leaked into the Ambarnaya river due to
+
 </body>
 
 </html>
